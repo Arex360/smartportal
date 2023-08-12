@@ -10,7 +10,21 @@ import axios from "axios"
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 let Home = ()=>{
+    const options = [
+        'Model 01', 'Model 02'
+      ];
+    let keyMap = {
+        'Model 01': '0',
+        'Model 02': '1'
+    }
+    let __clientID = ''
+    let __modelID = ''
+    const defaultOption = options[0];
     const _query = window.location.search
     const _params= new URLSearchParams(_query)
     const API = "https://smartapi-2udiuitul-arex360.vercel.app"
@@ -46,9 +60,25 @@ let Home = ()=>{
         },3000)
         
     }
+    const promiseUpdateModel = ()=> new Promise((resolve,reject)=> {
+        axios.get(`http://mnsstrap.ddns.net:5000/setModel/${trapName}/${keyMap[__modelID]}`)
+        .then(e=>resolve())
+        .catch(e=>{    
+        reject()
+       })
+    })
+    const UpdateModel = e =>{
+        __modelID = e
+        toast.promise(promiseUpdateModel, {
+            pending: `Updating model of ${__clientID}`,
+            success: `Model Updated to ${__modelID}`,
+            error: 'Failed to Update model'
+        })
+    }
     useEffect(()=>{
         const query = window.location.search
         const params= new URLSearchParams(query)
+        __clientID = params.get('trap')
         setTrapName(params.get('trap'))
         getData()
         const userDoc = doc(db,"users","/051a9911de7b5bbc610b76f4eda834a0")
@@ -61,6 +91,7 @@ let Home = ()=>{
     },[])
     return(
         <div className="w-full h-[100vh]">
+            <ToastContainer />
            <Navbar/>
             <div className="preview w-full h-[80vh] px-10 flex items-center justify-between  bg-gray-800">
                 <div className="left w-3/6 h-full flex flex-col justify-center items-center bg-white shadow-2xl mt-10 rounded-2xl">
@@ -80,6 +111,7 @@ let Home = ()=>{
                             alert(_date.getTime())
                         }}  title={'Set Expiry'}/>
                     </div>
+                    <Dropdown options={options} onChange={e=>UpdateModel(e.value)} value={defaultOption} placeholder="Select an option" />;
                     <Button title={'Refresh'}/>
                     
                 </div>
