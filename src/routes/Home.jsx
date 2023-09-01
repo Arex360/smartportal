@@ -14,6 +14,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import CheckCard from "../components/CheckCard"
 let Home = ()=>{
     const options = [
         'Model 01', 'Model 02'
@@ -112,6 +113,13 @@ let Home = ()=>{
                         }}  title={'Set Expiry'}/>
                     </div>
                     <Dropdown options={options} onChange={e=>UpdateModel(e.value)} value={defaultOption} placeholder="Select an option" />;
+                    <div className="grid grid-cols-3 gap-3 mb-3">
+                       <CheckCard insectname={"fallarmyworm"} />
+                       <CheckCard insectname={"pinkbollworm"} />
+                       <CheckCard insectname={"cucurbitae"} />
+                       <CheckCard insectname={"dorsalis"} />
+                       <CheckCard insectname={"zonata"} />    
+                    </div>
                     <Button title={'Refresh'}/>
                     
                 </div>
