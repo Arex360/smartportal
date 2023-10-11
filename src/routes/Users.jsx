@@ -8,6 +8,7 @@ import {collection,getDoc,doc,getDocs, DocumentSnapshot} from 'firebase/firestor
 import md5 from "md5"
 import { db, RDb } from "../firebase/firebase"
 import {ref,get, child} from 'firebase/database'
+import axios from "axios"
 let Users = ()=>{
     const _query = window.location.search
     const _params= new URLSearchParams(_query)
@@ -15,17 +16,49 @@ let Users = ()=>{
     const [userBars,setUserBars] = useState([])
     const [traps,setTraps] = useState([])
     const [Hash,setHash] = useState('Hash')
+    function timeAgo(lastActive) {
+        const secondsAgo = Math.floor(lastActive);
+        
+        if (secondsAgo < 60) {
+            return secondsAgo + ' second' + (secondsAgo !== 1 ? 's' : '') + ' ago';
+        }
+        
+        const minutesAgo = Math.floor(secondsAgo / 60);
+        if (minutesAgo < 60) {
+            return minutesAgo + ' minute' + (minutesAgo !== 1 ? 's' : '') + ' ago';
+        }
+        
+        const hoursAgo = Math.floor(minutesAgo / 60);
+        if (hoursAgo < 24) {
+            return hoursAgo + ' hour' + (hoursAgo !== 1 ? 's' : '') + ' ago';
+        }
+        
+        const daysAgo = Math.floor(hoursAgo / 24);
+        return daysAgo + ' day' + (daysAgo !== 1 ? 's' : '') + ' ago';
+    }
     const getTraps =async email=>{
         email = md5(email)
         const _ref = ref(RDb)
         const snapshot = await get(child(_ref,"accounts/"+email))
         const myTraps = []
-        snapshot.forEach(shot=>{
+        snapshot.forEach(async shot=>{
             const data = shot.val()
             for(var key in data){
                 const _details = data[key]
                 if(myTraps.includes(_details.trapID) == false){
-                    myTraps.push(<Bar onClick={()=>window.open('/preview?trap='+_details.trapID)} title={_details.trapID} count="active"/>)
+                    //http://mnsstrap.ddns.net:5000/Getdetection/client1/date
+                    let currentTimeStamp = Date.now() / 1000
+                    const res = await axios.get(`http://mnsstrap.ddns.net:5000/Getdetection/${_details.trapID}/date`)
+                    let status = "offline"
+                    if(res.data != "0"){
+                        let lastActive = currentTimeStamp - parseFloat(res.data)
+                        if(lastActive > 500){
+                            let ago = timeAgo(lastActive)
+                            status = ago
+                        }
+                    }
+                    
+                    myTraps.push(<Bar onClick={()=>window.open('/preview?trap='+_details.trapID)} title={_details.trapID} count={status}/>)
                 }
             }
             setTraps(myTraps)

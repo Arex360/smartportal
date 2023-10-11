@@ -76,6 +76,9 @@ let Home = ()=>{
             error: 'Failed to Update model'
         })
     }
+    const DownloadCSV = (month)=>{
+        window.open(`http://mnsstrap.ddns.net:3001/downloadcsv/${month}/${trapName}`)
+    }
     useEffect(()=>{
         const query = window.location.search
         const params= new URLSearchParams(query)
@@ -120,8 +123,21 @@ let Home = ()=>{
                        <CheckCard insectname={"dorsalis"} />
                        <CheckCard insectname={"zonata"} />    
                     </div>
-                    <Button title={'Refresh'}/>
-                    
+                    {false && <Button title={'Refresh'}/>}
+                    <div className="grid grid-cols-7 gap-3 mb-3">
+                        <Button title={'Jan'} onClick={()=>DownloadCSV('Jan')} locked={true}/>
+                        <Button title={'Feb'} onClick={()=>DownloadCSV('Feb')} locked={true}/>
+                        <Button title={'Mar'} onClick={()=>DownloadCSV('Mar')} locked={true}/>
+                        <Button title={'Apr'} onClick={()=>DownloadCSV('Apr')} locked={true}/>
+                        <Button title={'May'} onClick={()=>DownloadCSV('May')} locked={true}/>
+                        <Button title={'Jun'} onClick={()=>DownloadCSV('Jun')}/>
+                        <Button title={'Jul'} onClick={()=>DownloadCSV('Jul')}/>
+                        <Button title={'Aug'} onClick={()=>DownloadCSV('Aug')}/>
+                        <Button title={'Sept'} onClick={()=>DownloadCSV('Sep')}/>   
+                        <Button title={'Oct'} onClick={()=>DownloadCSV('Oct')}/>
+                        <Button title={'Nov'} onClick={()=>DownloadCSV('Nov')} locked={true}/>
+                        <Button title={'Dec'} onClick={()=>DownloadCSV('Dec')} locked={true}/>
+                    </div>
                 </div>
                 <div className="right w-2/6 h-full flex flex-col justify-center items-center shadow-lg">
                     <div className="img w-full h-1/2">
