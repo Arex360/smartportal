@@ -55,6 +55,8 @@ let Users = ()=>{
                         if(lastActive > 500){
                             let ago = timeAgo(lastActive)
                             status = ago
+                        }else{
+                            status = "online"
                         }
                     }
                     
