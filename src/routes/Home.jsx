@@ -135,7 +135,7 @@ let Home = ()=>{
                         <Button title={'Aug'} onClick={()=>DownloadCSV('Aug')}/>
                         <Button title={'Sept'} onClick={()=>DownloadCSV('Sep')}/>   
                         <Button title={'Oct'} onClick={()=>DownloadCSV('Oct')}/>
-                        <Button title={'Nov'} onClick={()=>DownloadCSV('Nov')} locked={true}/>
+                        <Button title={'Nov'} onClick={()=>DownloadCSV('Nov')}/>
                         <Button title={'Dec'} onClick={()=>DownloadCSV('Dec')} locked={true}/>
                     </div>
                 </div>
