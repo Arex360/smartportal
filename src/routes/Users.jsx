@@ -16,6 +16,7 @@ let Users = ()=>{
     const [userBars,setUserBars] = useState([])
     const [traps,setTraps] = useState([])
     const [Hash,setHash] = useState('Hash')
+    const [loading,setLoading] = useState(false)
     function timeAgo(lastActive) {
         const secondsAgo = Math.floor(lastActive);
         
@@ -39,6 +40,7 @@ let Users = ()=>{
     const getTraps =async email=>{
         email = md5(email)
         const _ref = ref(RDb)
+        setLoading(true)
         const snapshot = await get(child(_ref,"accounts/"+email))
         const myTraps = []
         snapshot.forEach(async shot=>{
@@ -59,7 +61,7 @@ let Users = ()=>{
                             status = "online"
                         }
                     }
-                    
+                    setLoading(false)
                     myTraps.push(<Bar onClick={()=>window.open('/preview?trap='+_details.trapID)} title={_details.trapID} count={status}/>)
                 }
             }
@@ -86,7 +88,7 @@ let Users = ()=>{
             <div className="preview w-full h-[80vh] px-10 flex items-center justify-between  bg-gray-800">
                 <div className="left w-3/6 h-full flex flex-col justify-center items-center bg-white shadow-2xl mt-10 rounded-2xl">
                     <h2 className="mt-2 mb-2">Details</h2>
-                    <div className="bars w-full flex flex-col justify-center items-center h-2/3 overflow-scroll">
+                    <div className="bars w-full flex flex-col  items-center h-2/3 overflow-scroll pt-5">
                     {userBars}
                     </div>
                     <br></br>
@@ -98,7 +100,8 @@ let Users = ()=>{
                         <img src={Fly} className={'w-full h-full'} alt="" />
                     </div>
                     <div className="container bg-white w-full h-1/3 rounded-lg mt-5 flex flex-col justify-center items-center">
-                        <div className="container flex flex-col w-full h-2/3 justify-center items-center overflow-scroll">
+                        <div className="container flex flex-col w-full h-2/3 justify-center items-center overflow-y-scroll p-10">
+                        {loading && <div className="circle bg-blue-500 w-5 h-5 rounded-full animate-ping"></div>}
                         {traps}
                         </div>
                     </div>
