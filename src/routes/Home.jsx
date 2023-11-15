@@ -17,11 +17,12 @@ import 'react-toastify/dist/ReactToastify.css'
 import CheckCard from "../components/CheckCard"
 let Home = ()=>{
     const options = [
-        'Model 01', 'Model 02'
+        'Model 01', 'Model 02','Model 03'
       ];
     let keyMap = {
         'Model 01': '0',
-        'Model 02': '1'
+        'Model 02': '1',
+        'Model 03': '2'
     }
     let __clientID = ''
     let __modelID = ''
