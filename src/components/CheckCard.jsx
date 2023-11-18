@@ -1,32 +1,32 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-const CheckCard = ({insectname})=>{
-    let [all_insects,setAllinsect] = useState('')
+const CheckCard = ({insectname,client})=>{
+    let [all_insects,setAllinsect] = useState(``)
     let [checked,setChecked] = useState(true)
     let [_id,setID] = useState(insectname)
     let [blurred,setBlurred] = useState("opacity-30")
     const onChange= async (e)=> {
         if(e.target.checked){
-            let res = await axios.get('http://mnsapi.ddns.net:3001/getmode/client1')
+            let res = await axios.get(`http://mnsapi.ddns.net:3001/getmode/${client}`)
             res = res.data
             if(!res.includes(insectname)){
                 const _query = window.location.search
                 const _params= new URLSearchParams(_query)
-                let snapshot = await axios.get(`http://mnsapi.ddns.net:3001/setmode/${_params.get('trap')}/${res}`+insectname)
+                let snapshot = await axios.get(`http://mnsapi.ddns.net:3001/setmode/${_params.get(`trap`)}/${res}`+insectname)
             }
         }else{
-            let res = await axios.get('http://mnsapi.ddns.net:3001/getmode/client1')
+            let res = await axios.get(`http://mnsapi.ddns.net:3001/getmode/${client}`)
             res = res.data
             if(res.includes(insectname)){
                 const _query = window.location.search
                 const _params= new URLSearchParams(_query)
                 let target = res.replace(insectname,"")
-                let snapshot = await axios.get(`http://mnsapi.ddns.net:3001/setmode/${_params.get('trap')}/`+target)
+                let snapshot = await axios.get(`http://mnsapi.ddns.net:3001/setmode/${_params.get(`trap`)}/`+target)
             }
         }
     }
     const getDetail = async ()=>{
-        let res = await axios.get('http://mnsapi.ddns.net:3001/getmode/client1')
+        let res = await axios.get(`http://mnsapi.ddns.net:3001/getmode/${client}`)
         res = res.data
         setAllinsect(all_insects)
         setChecked(false)

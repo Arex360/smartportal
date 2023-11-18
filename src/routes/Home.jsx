@@ -48,6 +48,7 @@ let Home = ()=>{
     }
     const getData= async ()=>{
         setTimeout(async ()=>{
+            setTrapImage(`http://mnsstrap.ddns.net:5000/getTrapImage/${trapName}`)
             const humidity = await axios.get(API+'/getTempreture/'+trapName)
             setHum(humidity.data)
             const tempreture = await axios.get(API+'/getHumidity/'+trapName)
@@ -118,11 +119,11 @@ let Home = ()=>{
                     </div>
                     <Dropdown options={options} onChange={e=>UpdateModel(e.value)} value={defaultOption} placeholder="Select an option" />;
                     <div className="grid grid-cols-3 gap-3 mb-3">
-                       <CheckCard insectname={"fallarmyworm"} />
-                       <CheckCard insectname={"pinkbollworm"} />
-                       <CheckCard insectname={"cucurbitae"} />
-                       <CheckCard insectname={"dorsalis"} />
-                       <CheckCard insectname={"zonata"} />    
+                       <CheckCard insectname={"fallarmyworm"} client={trapName} />
+                       <CheckCard insectname={"pinkbollworm"} client={trapName} />
+                       <CheckCard insectname={"cucurbitae"} client={trapName} />
+                       <CheckCard insectname={"dorsalis"} client={trapName} />
+                       <CheckCard insectname={"zonata"} client={trapName} />    
                     </div>
                     {false && <Button title={'Refresh'}/>}
                     <div className="grid grid-cols-7 gap-3 mb-3">
