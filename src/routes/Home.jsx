@@ -62,7 +62,7 @@ let Home = ()=>{
             <div className="nav shadow-xl w-full h-[10%] flex items-center pl-6">
                     <label className="text-white text-3xl font-bold" htmlFor="">FakeEye</label>
             </div>
-            <div className="cnt flex-col flex items-center">
+            <div className="cnt flex items-center">
                 <div className="left">
                     <div className="flex gap-10 pt-10 pl-10">
                         <Upload title={"Source Image"} onChange={e=>SendBase64(e,setSourceImage)}/>
