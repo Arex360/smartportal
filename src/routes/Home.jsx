@@ -62,15 +62,15 @@ let Home = ()=>{
         console.log(sourceImage)
     },[])
     return(
-        <div className="body w-full h-[100vh] bg-gray-800">
-            <div className="nav shadow-xl w-full h-[10%] flex items-center pl-6 overflow-hidden justify-between">
+        <div className="body w-full h-[100vh] bg-gray-900">
+            <div className="nav bg-red-700 shadow-xl w-full h-[10%] flex items-center pl-6 overflow-hidden justify-between">
                     <label className="text-white text-3xl font-bold" htmlFor="">FakeEye</label>
                     <div className="bar h-full w-48 rotate-45 bg-red-600 flex justify-center items-center text-white font-extrabold text-3xl">
                         <label htmlFor="">Beta</label>
                     </div>
             </div>
             <div className="cnt flex items-center">
-                <div className="left shadow-2xl p-5 mt-10">
+                <div className="left shadow-2xl p-5 mt-10 bg-gray-950">
                     <div className="flex gap-10 pt-10 pl-10">
                         <Upload title={"Source Image"} onChange={e=>SendBase64(e,setSourceImage)}/>
                         <Upload title={"Target Image"} onChange={e=>SendBase64(e,setTargetImage)}/>
