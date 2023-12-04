@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Upload from "../components/Upload"
 import axios from "axios"
 import Button from "../components/Button"
+import { saveAs } from 'file-saver'
 import ClipLoader from "react-spinners/PuffLoader";
 let Home = ()=>{
     const override  = {
@@ -15,6 +16,9 @@ let Home = ()=>{
     const [index,setIndex] = useState(0)
     let [loading, setLoading] = useState(false);
     let [color, setColor] = useState("#ffffff");
+    const downloadImage = () => {
+        saveAs(url, 'image.jpg') // Put your image URL here.
+      }
     let generateRandomNumber = (a,b) => { 
         const min = a; 
         const max = b; 
@@ -59,11 +63,14 @@ let Home = ()=>{
     },[])
     return(
         <div className="body w-full h-[100vh] bg-gray-800">
-            <div className="nav shadow-xl w-full h-[10%] flex items-center pl-6">
+            <div className="nav shadow-xl w-full h-[10%] flex items-center pl-6 overflow-hidden justify-between">
                     <label className="text-white text-3xl font-bold" htmlFor="">FakeEye</label>
+                    <div className="bar h-full w-48 rotate-45 bg-red-600 flex justify-center items-center text-white font-extrabold text-3xl">
+                        <label htmlFor="">Beta</label>
+                    </div>
             </div>
             <div className="cnt flex items-center">
-                <div className="left">
+                <div className="left shadow-2xl p-5 mt-10">
                     <div className="flex gap-10 pt-10 pl-10">
                         <Upload title={"Source Image"} onChange={e=>SendBase64(e,setSourceImage)}/>
                         <Upload title={"Target Image"} onChange={e=>SendBase64(e,setTargetImage)}/>
@@ -73,7 +80,7 @@ let Home = ()=>{
                         <Button title={"Proceed"} onClick={()=>SendImage()}/>
                     </div>
                 </div>
-                <div className="right w-96 h-96 flex items-center justify-center">
+                <div className="right w-96 h-96 flex flex-col items-center justify-center mt-10 ml-10">
                     {url != "" && <img className="w-full h-full" src={url} alt="" />}
                     {url == "" &&<ClipLoader
                         color={color}
@@ -83,9 +90,13 @@ let Home = ()=>{
                         aria-label="Loading Spinner"
                         data-testid="loader"
                     />}
+                    {url != "" && <div className="button w-full mt-2">
+                        <Button onClick={downloadImage} title={"Download"}/>
+                    </div>}
+                    
                 </div>
             </div>
-
+        <div className="strong text-white font-bold absolute bottom-8 right-4">Made with ❤️ By <u>Arex Yeager</u></div>
         </div>
     )
 }
