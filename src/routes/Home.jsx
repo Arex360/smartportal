@@ -37,7 +37,7 @@ let Home = ()=>{
           sourceImage:sourceImage,
           targetImage:targetImage
         }
-        axios.post('http://deepfake.zapto.org:443/postPhoto',body).then(res=>{
+        axios.post('http://localhost:443/postPhoto',body).then(res=>{
           setResultURL(`${res.data.processed_url}?i=${index}`)
           setLoading(false)
           //window.location.replace(res.data.processed_url)
