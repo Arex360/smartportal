@@ -48,6 +48,7 @@ let Home = ()=>{
           setIndex(i)
           setTimeout(() => {
             axios.get(`http://129.151.135.185:443/${filename}.png`)
+            alert("deleting")
           }, 7000);
         }).catch(e=>console.log(e))
     }
