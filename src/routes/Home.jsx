@@ -37,7 +37,7 @@ let Home = ()=>{
           sourceImage:sourceImage,
           targetImage:targetImage
         }
-        axios.post('http://localhost:443/postPhoto',body).then(res=>{
+        axios.post('http://129.151.135.185:443/postPhoto',body).then(res=>{
           setResultURL(`${res.data.processed_url}?i=${index}`)
           setLoading(false)
           //window.location.replace(res.data.processed_url)
