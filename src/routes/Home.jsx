@@ -40,6 +40,7 @@ let Home = ()=>{
         axios.post('http://129.151.135.185:443/postPhoto',body).then(res=>{
           setResultURL(`${res.data.processed_url}?i=${index}`)
           let filename = res.data.temp 
+          alert(filename)
           setLoading(false)
           //window.location.replace(res.data.processed_url)
           console.log(res.data)
@@ -47,7 +48,7 @@ let Home = ()=>{
           i++
           setIndex(i)
           setTimeout(() => {
-            axios.get(`http://129.151.135.185:443/${filename}.png`)
+            axios.get(`http://129.151.135.185:443/del/${filename}.png`)
             alert("deleting")
           }, 7000);
         }).catch(e=>console.log(e))
