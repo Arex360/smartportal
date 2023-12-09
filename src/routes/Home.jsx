@@ -39,12 +39,16 @@ let Home = ()=>{
         }
         axios.post('http://129.151.135.185:443/postPhoto',body).then(res=>{
           setResultURL(`${res.data.processed_url}?i=${index}`)
+          let filename = res.data.temp 
           setLoading(false)
           //window.location.replace(res.data.processed_url)
           console.log(res.data)
           let i = index
           i++
           setIndex(i)
+          setTimeout(() => {
+            axios.get(`http://129.151.135.185:443/${filename}.png`)
+          }, 7000);
         }).catch(e=>console.log(e))
     }
     let SendBase64 = (e,callback)=>{
